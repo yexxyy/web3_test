@@ -16,7 +16,7 @@ contract UpgradeContract is UUPSUpgradeable, OwnableUpgradeable {
         __Ownable_init();
     }
 
-    function getNum() external pure returns (uint) {
+    function getNum() public pure returns (uint) {
         return 8;
     }
 
