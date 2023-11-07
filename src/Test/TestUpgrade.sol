@@ -17,7 +17,7 @@ contract UpgradeContract is UUPSUpgradeable, OwnableUpgradeable {
     }
 
     function getNum() public pure returns (uint) {
-        return 8;
+        return 10;
     }
 
     function _authorizeUpgrade(address) internal override onlyOwner {}

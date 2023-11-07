@@ -12,7 +12,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
      * 移除之前的代理合约参数 proxy
      * 执行之前逻辑合约的 upgradeTo 方法升级到新的逻辑合约
      */
-    const upgrade_contract = await deploy('UpgradeContractV2', {
+    const upgrade_contract = await deploy('UpgradeContractV3', {
         contract: 'UpgradeContract',
         log: true,
         from: deployer
@@ -21,5 +21,5 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     return true
 };
 export default func;
-func.id = 'deploy_test_upgrade_v2'; // id required to prevent reexecution
-func.tags = ['all_v2'];
+func.id = 'deploy_test_upgrade_v3'; // id required to prevent reexecution
+func.tags = ['all_v3'];
