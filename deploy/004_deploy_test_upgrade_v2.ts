@@ -5,8 +5,13 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployer } = await hre.getNamedAccounts();
     const { deploy, execute } = hre.deployments;
 
-    // proxy only in non-live network (localhost and hardhat network) enabling HCR (Hot Contract Replacement)
-    // in live network, proxy is disabled and constructor is invoked
+    /**
+     * 升级合约要点
+     * UpgradeContractV2
+     * 指定升级合约 contract: 'UpgradeContract'
+     * 移除之前的代理合约参数 proxy
+     * 执行之前逻辑合约的 upgradeTo 方法升级到新的逻辑合约
+     */
     const upgrade_contract = await deploy('UpgradeContractV2', {
         contract: 'UpgradeContract',
         log: true,
