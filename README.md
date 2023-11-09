@@ -145,3 +145,19 @@ This will test the contract against a temporary fork of the specified network.
 This will deploy the contract against a fork of the specified network and it will keep running as a node.
 
 Behind the scene it uses `hardhat node` command so you can append any argument for it
+
+
+```
+# mnemonic2private_key.py
+from web3 import Web3
+w3 = Web3()
+
+# test mnemonic from ganache (don't use it!)
+mnemonic = ""
+
+w3.eth.account.enable_unaudited_hdwallet_features()
+for i in range(10):
+    acc = w3.eth.account.from_mnemonic(mnemonic, account_path=f"m/44'/60'/0'/0/{i}")
+    print(f"\naddress{i + 1} = '{acc.address}'")
+    print(f"private{i + 1} = '{w3.to_hex(acc.key)}'")
+```
