@@ -15,6 +15,12 @@ async function main() {
     const upgradeContract = UpgradeContract__factory.connect(upgradeContractAddress, signer)
     const num = await upgradeContract.getNum()
     console.log(`num: ${num}`)
+
+    // 将ower升级到多签钱包
+    const multiSignAddress = process.env.MULTI_SIGN_ADDRESS as string
+    await upgradeContract.transferOwnership(multiSignAddress)
+    // const ower = await upgradeContract.owner()
+    // console.log(`ower: ${ower}`)
 }
 
 main()
