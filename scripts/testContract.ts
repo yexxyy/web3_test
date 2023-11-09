@@ -12,13 +12,16 @@ async function main() {
     const upgradeContractAddress = process.env.UPGRADE_CONTRACT_ADDRESS as string
     console.log(`upgradeContractAddress: ${upgradeContractAddress}`)
     const signer = new ethers.Wallet(privateKey, rpcProvider)
+    
     const upgradeContract = UpgradeContract__factory.connect(upgradeContractAddress, signer)
+    const ower = await upgradeContract.owner()
+    console.log(`ower: ${ower}`)
     const num = await upgradeContract.getNum()
     console.log(`num: ${num}`)
 
     // 将ower升级到多签钱包
-    const multiSignAddress = process.env.MULTI_SIGN_ADDRESS as string
-    await upgradeContract.transferOwnership(multiSignAddress)
+    // const multiSignAddress = process.env.MULTI_SIGN_ADDRESS as string
+    // await upgradeContract.transferOwnership(multiSignAddress)
     // const ower = await upgradeContract.owner()
     // console.log(`ower: ${ower}`)
 }
