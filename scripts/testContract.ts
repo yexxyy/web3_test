@@ -14,10 +14,10 @@ async function main() {
     const signer = new ethers.Wallet(privateKey, rpcProvider)
     
     const upgradeContract = UpgradeContract__factory.connect(upgradeContractAddress, signer)
-    const ower = await upgradeContract.owner()
-    console.log(`ower: ${ower}`)
-    const num = await upgradeContract.getNum()
-    console.log(`num: ${num}`)
+    // const ower = await upgradeContract.owner()
+    // console.log(`ower: ${ower}`)
+    // const num = await upgradeContract.getNum()
+    // console.log(`num: ${num}`)
 
     // 将ower升级到多签钱包
     // const multiSignAddress = process.env.MULTI_SIGN_ADDRESS as string
@@ -26,8 +26,9 @@ async function main() {
     // console.log(`ower: ${ower}`)
 
     // 多函数拼接调用
-    // await upgradeContract.aggregate()
-
+    ethers
+    const returnData = await upgradeContract.aggregate([])
+    console.log(returnData)
 }
 
 main()
