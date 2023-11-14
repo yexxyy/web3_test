@@ -24,6 +24,10 @@ async function main() {
     // await upgradeContract.transferOwnership(multiSignAddress)
     // const ower = await upgradeContract.owner()
     // console.log(`ower: ${ower}`)
+
+    // 多函数拼接调用
+    // await upgradeContract.aggregate()
+
 }
 
 main()

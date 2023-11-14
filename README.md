@@ -146,18 +146,31 @@ This will deploy the contract against a fork of the specified network and it wil
 
 Behind the scene it uses `hardhat node` command so you can append any argument for it
 
-
+### 助记词转私钥
 ```
 # mnemonic2private_key.py
 from web3 import Web3
 w3 = Web3()
 
 # test mnemonic from ganache (don't use it!)
-mnemonic = ""
+mnemonic = "助记词 xxx"
 
 w3.eth.account.enable_unaudited_hdwallet_features()
 for i in range(10):
     acc = w3.eth.account.from_mnemonic(mnemonic, account_path=f"m/44'/60'/0'/0/{i}")
     print(f"\naddress{i + 1} = '{acc.address}'")
     print(f"private{i + 1} = '{w3.to_hex(acc.key)}'")
+```
+
+### 测试多个方法拼接调用
+```
+(base) yetongxue@yetongxue web3_test % yarn hardhat deploy --network goerli --tags all_v4
+yarn run v1.22.19
+$ hardhat deploy --network goerli --tags all_v4
+Generating typings for: 1 artifacts in dir: typechain-types for target: ethers-v6
+Successfully generated 56 typings!
+Compiled 1 Solidity file successfully (evm target: london).
+deploying "UpgradeContractV4" (tx: 0xf8b0190a0000d6611c974a16c5243dc94c8b20b46620e181db38ea2b03754a84)...: deployed at 0xD24f495aa24447F2Ac95D733C3EB2c9b31af9FD8 with 1397500 gas
+executing UpgradeContract.upgradeTo (tx: 0xb0ede13be0e438d0f56932836761b4b5804e6f728c9b49e6b0926035d688025a) ...: performed with 38969 gas
+✨  Done in 63.29s.
 ```
