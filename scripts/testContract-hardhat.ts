@@ -19,7 +19,7 @@ async function main() {
 
     // 多函数拼接调用
     const iface = upgradeContract.interface
-    const playload = iface.encodeFunctionData("setNum", [10])
+    const playload = iface.encodeFunctionData("setNum", [9])
     const playload2 = iface.encodeFunctionData("setStr", ["revert"])
 
     const calls = [
@@ -48,10 +48,17 @@ async function main() {
     // setNumStatus 此状态为通过call方式调用返回的调用结果标记
     var [callSetNumStatus, setNumRes]  = returnData[0]
     console.log(callSetNumStatus, setNumRes)
-    var [setNumSuccess, setNumResStr]  = iface.decodeFunctionResult("setNum", setNumRes)
-
+    
     // true setNum success
-    console.log(setNumSuccess, setNumResStr)
+    if (callSetNumStatus === true){
+        var [setNumSuccess, setNumResStr] = iface.decodeFunctionResult("setNum", setNumRes)
+        console.log(setNumSuccess, setNumResStr)
+    } else {
+        const setNumError = iface.decodeErrorResult("UpgradeContract__ValidateNumError", setNumRes)
+        // 9n
+        console.log(setNumError[0])
+    }
+    
 }
 
 main()
