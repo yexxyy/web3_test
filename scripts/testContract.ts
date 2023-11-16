@@ -1,6 +1,7 @@
 import { ethers } from "ethers"
 import * as dotenv from "dotenv"
 import { UpgradeContract__factory } from "../typechain-types"
+import { parseUnits } from 'ethers';
 
 // dotenv.config({ path: __dirname+'/.env' })
 dotenv.config()
@@ -26,8 +27,17 @@ async function main() {
     // console.log(`ower: ${ower}`)
 
     // 多函数拼接调用
-    ethers
-    const returnData = await upgradeContract.aggregate([])
+    const iface = upgradeContract.interface
+    const playload = iface.encodeFunctionData("setNum", [9])
+    const playload2 = iface.encodeFunctionData("setStr", ["revert"])
+    
+    const calls = [
+        { 'allowFailure': true, 'value': parseUnits('51000000', 0), 'payload': playload},
+        { 'allowFailure': true, 'value': parseUnits('52000000', 0), 'payload': playload2 }
+    ]
+    console.log(calls)
+    
+    const returnData = await upgradeContract.aggregate(calls)
     console.log(returnData)
 }
 

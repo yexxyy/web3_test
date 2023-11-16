@@ -4,6 +4,7 @@ pragma solidity ^0.8.17;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "hardhat/console.sol";
 
 contract UpgradeContract is UUPSUpgradeable, OwnableUpgradeable {
 	struct Call {
@@ -34,26 +35,26 @@ contract UpgradeContract is UUPSUpgradeable, OwnableUpgradeable {
 	}
 
 	function getNum() public pure returns (uint) {
-		return 111;
+		return 112;
 	}
 
-	function setNum(uint x) public returns (bool success, bytes memory retData) {
+	function setNum(uint x) external payable returns (bool success, string memory retData) {
 		if (x < 10) {
 			revert UpgradeContract__ValidateNumError({num: x});
 		}
 		num = x;
 		success = true;
-		retData = bytes("setNum success");
+		retData = "setNum success";
 	}
 
-	function setStr(string memory x) public returns (bool, bytes memory) {
+	function setStr(string memory x) external payable returns (bool, string memory) {
 		bytes32 str1Hash = keccak256(abi.encode(x));
 		bytes32 str2Hash = keccak256(abi.encode("revert"));
 		if (str1Hash == str2Hash) {
 			revert UpgradeContract__ValidateStrError({str: x});
 		}
 		str = x;
-		return (true, bytes("setStr success"));
+		return (true, "setStr success");
 	}
 
 	function _authorizeUpgrade(address) internal override onlyOwner {}
@@ -86,6 +87,8 @@ contract UpgradeContract is UUPSUpgradeable, OwnableUpgradeable {
 			}
 		}
 		if (msg.value != valAccumulator) {
+            console.log(msg.value);
+            console.log(valAccumulator);
 			revert UpgradeContract__AggregateValueError();
 		}
 	}
